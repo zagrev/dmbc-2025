@@ -1,0 +1,92 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"color": {
+			"defaultPalette": false,
+			"palette": [
+				{ "name": "Chorus Blue", "slug": "chorus-blue", "color": "#147bbd" },
+				{ "name": "Link Blue", "slug": "link-blue", "color": "#3858e9" },
+				{ "name": "Deep Link Blue", "slug": "deep-link-blue", "color": "#2947d1" },
+				{ "name": "Near Black", "slug": "near-black", "color": "#111111" },
+				{ "name": "Soft Gray", "slug": "soft-gray", "color": "#f7f8fa" },
+				{ "name": "White", "slug": "white", "color": "#ffffff" }
+			]
+		},
+		"layout": {
+			"contentSize": "760px",
+			"wideSize": "1280px"
+		},
+		"spacing": {
+			"units": [ "px", "rem", "%", "vw" ],
+			"spacingSizes": [
+				{ "name": "Small", "slug": "small", "size": "16px" },
+				{ "name": "Medium", "slug": "medium", "size": "24px" },
+				{ "name": "Large", "slug": "large", "size": "40px" },
+				{ "name": "Section", "slug": "section", "size": "64px" }
+			]
+		},
+		"typography": {
+			"fluid": false,
+			"fontFamilies": [
+				{
+					"name": "Manrope",
+					"slug": "manrope",
+					"fontFamily": "Manrope, sans-serif",
+					"fontFace": [
+						{
+							"src": [ "file:./assets/fonts/manrope/Manrope-VariableFont_wght.woff2" ],
+							"fontWeight": "200 800",
+							"fontStyle": "normal",
+							"fontFamily": "Manrope"
+						}
+					]
+				},
+				{ "name": "Editorial Serif", "slug": "editorial-serif", "fontFamily": "Georgia, 'Times New Roman', serif" }
+			],
+			"fontSizes": [
+				{ "name": "Small", "slug": "small", "size": "14px" },
+				{ "name": "Medium", "slug": "medium", "size": "16px" },
+				{ "name": "Large", "slug": "large", "size": "20px" },
+				{ "name": "Extra Large", "slug": "x-large", "size": "32px" },
+				{ "name": "Display", "slug": "display", "size": "60px" }
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "#ffffff",
+			"text": "#111111"
+		},
+		"spacing": {
+			"blockGap": "24px",
+			"padding": {
+				"left": "24px",
+				"right": "24px"
+			}
+		},
+		"typography": {
+			"fontFamily": "var:preset|font-family|manrope",
+			"fontSize": "20px",
+			"fontWeight": "400",
+			"lineHeight": "1.65"
+		},
+		"elements": {
+			"heading": {
+				"color": { "text": "#111111" },
+				"typography": { "fontFamily": "var:preset|font-family|manrope", "fontWeight": "400", "lineHeight": "1.15" }
+			},
+			"link": {
+				"color": { "text": "#3858e9" },
+				"typography": { "textDecoration": "underline" }
+			},
+			"button": {
+				"border": { "radius": "3px" },
+				"color": { "background": "#3858e9", "text": "#ffffff" },
+				"typography": { "fontWeight": "800" },
+				"spacing": { "padding": { "top": "13px", "right": "20px", "bottom": "13px", "left": "20px" } }
+			}
+		}
+	}
+}

@@ -1,0 +1,615 @@
+/*
+Theme Name: Dayton Metro Chorus 2025
+Theme URI: https://daytonmetrobarbershopchorus.org/
+Author: Dayton Metro Barbershop Chorus
+Description: A Twenty Twenty-Five child theme shaped around the Dayton Metro Barbershop Chorus homepage.
+Template: twentytwentyfive
+Version: 1.0.0
+Requires at least: 6.7
+Tested up to: 6.8
+Requires PHP: 8.0
+Text Domain: dmbc-2025
+*/
+
+:root {
+	--dmbc-ink: #111111;
+	--dmbc-header-blue: #147bbd;
+	--dmbc-link-blue: #3858e9;
+	--dmbc-link-blue-dark: #2947d1;
+	--dmbc-paper: #ffffff;
+	--dmbc-white: #ffffff;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: "Manrope", sans-serif;
+	color: var(--dmbc-ink);
+}
+
+a {
+	text-underline-offset: 0.18em;
+}
+
+a:hover {
+	text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+	outline: 3px solid var(--dmbc-link-blue);
+	outline-offset: 3px;
+}
+
+.dmbc-site-header {
+	position: relative;
+	z-index: 2;
+	background: var(--dmbc-header-blue);
+	color: var(--dmbc-white);
+}
+
+.dmbc-header-inner {
+	box-sizing: border-box;
+	width: min(90%, 1600px);
+	min-height: 108px;
+	margin-inline: auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+}
+
+.dmbc-wordmark {
+	flex: 0 0 285px;
+	max-width: 285px;
+	color: var(--dmbc-white);
+	font-size: 21px;
+	font-weight: 500;
+	line-height: 1.4;
+	text-decoration: none;
+}
+
+.dmbc-wordmark span {
+	display: block;
+	margin-top: 0;
+	color: var(--dmbc-white);
+	font-size: inherit;
+	font-weight: inherit;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.dmbc-nav {
+	color: var(--dmbc-white);
+	font-size: 17px;
+	font-weight: 400;
+}
+
+.dmbc-nav a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.dmbc-nav a:hover {
+	color: #dceeff;
+}
+
+.dmbc-nav .wp-block-navigation__responsive-container.is-menu-open {
+	padding: 28px;
+	background: var(--dmbc-header-blue);
+	color: var(--dmbc-white);
+}
+
+.dmbc-nav .wp-block-navigation__responsive-container-open,
+.dmbc-nav .wp-block-navigation__responsive-container-close {
+	color: var(--dmbc-white);
+}
+
+.dmbc-header-cta .wp-block-button__link,
+.dmbc-button-primary .wp-block-button__link {
+	border: 1px solid var(--dmbc-link-blue);
+	border-radius: 3px;
+	background: var(--dmbc-link-blue);
+	color: var(--dmbc-white);
+	font-size: 14px;
+	font-weight: 800;
+	line-height: 1.2;
+	padding: 13px 20px;
+	text-decoration: none;
+}
+
+.dmbc-header-cta .wp-block-button__link:hover,
+.dmbc-button-primary .wp-block-button__link:hover {
+	border-color: var(--dmbc-link-blue-dark);
+	background: var(--dmbc-link-blue-dark);
+}
+
+.dmbc-header-cta .wp-block-button__link {
+	border-color: transparent;
+	background: transparent;
+	color: var(--dmbc-white);
+	font-size: 17px;
+	font-weight: 400;
+	line-height: 1.4;
+	padding: 0;
+}
+
+.dmbc-header-cta .wp-block-button__link:hover {
+	border-color: transparent;
+	background: transparent;
+	color: #dceeff;
+	text-decoration: underline;
+}
+
+.dmbc-button-outline .wp-block-button__link {
+	border: 1px solid currentColor;
+	border-radius: 3px;
+	background: transparent;
+	color: var(--dmbc-link-blue);
+	font-size: 14px;
+	font-weight: 800;
+	line-height: 1.2;
+	padding: 13px 20px;
+	text-decoration: none;
+}
+
+.dmbc-home-hero {
+	position: relative;
+	overflow: hidden;
+	background: var(--dmbc-white);
+	color: var(--dmbc-ink);
+}
+
+.dmbc-home-hero::after {
+	position: absolute;
+	right: -125px;
+	bottom: -245px;
+	width: 460px;
+	height: 460px;
+	border: 1px solid rgb(20 123 189 / 12%);
+	border-radius: 50%;
+	content: "";
+	pointer-events: none;
+}
+
+.dmbc-hero-inner {
+	box-sizing: border-box;
+	width: min(100% - 48px, 1180px);
+	min-height: 570px;
+	margin-inline: auto;
+	display: grid;
+	grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+	align-items: center;
+	gap: clamp(48px, 8vw, 120px);
+	padding-block: 60px 72px;
+}
+
+.dmbc-hero-copy {
+	max-width: 620px;
+}
+
+.dmbc-eyebrow {
+	margin: 0 0 18px;
+	color: var(--dmbc-link-blue);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.dmbc-hero-copy h1 {
+	max-width: 620px;
+	margin: 0 0 22px;
+	color: var(--dmbc-ink);
+	font-size: 44px;
+	font-weight: 400;
+	letter-spacing: 0;
+	line-height: 1.04;
+}
+
+.dmbc-hero-copy > p:not(.dmbc-eyebrow) {
+	max-width: 590px;
+	color: #333333;
+	font-size: 18px;
+	line-height: 1.7;
+}
+
+.dmbc-hero-actions {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin-top: 30px;
+}
+
+.dmbc-hero-actions > .wp-block-button {
+	flex: 0 0 auto;
+	margin: 0;
+}
+
+.dmbc-hero-location {
+	margin-top: 28px;
+	color: #555555;
+	font-size: 14px;
+}
+
+.dmbc-hero-logo {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 390px;
+	aspect-ratio: 0.84;
+	justify-self: center;
+	border: 8px solid var(--dmbc-white);
+	background: var(--dmbc-white) url("assets/dayton-metro-logo.jpg") center / contain no-repeat;
+	box-shadow: 0 26px 70px rgb(0 0 0 / 28%);
+}
+
+.dmbc-section {
+	box-sizing: border-box;
+	width: min(100% - 48px, 1180px);
+	margin-inline: auto;
+	padding-block: 88px;
+}
+
+.dmbc-section-kicker {
+	margin: 0 0 12px;
+	color: var(--dmbc-link-blue);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+.dmbc-section h2 {
+	margin: 0 0 20px;
+	color: var(--dmbc-ink);
+	font-size: 31px;
+	font-weight: 400;
+	letter-spacing: 0;
+	line-height: 1.15;
+}
+
+.dmbc-intro {
+	max-width: 800px;
+	margin: 0;
+	font-size: 18px;
+	line-height: 1.8;
+}
+
+.dmbc-events-band {
+	background: var(--dmbc-paper);
+}
+
+.dmbc-event-inner {
+	display: grid;
+	grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+	align-items: center;
+	gap: 56px;
+}
+
+.dmbc-event-note {
+	border-left: 4px solid var(--dmbc-link-blue);
+	padding: 8px 0 8px 28px;
+}
+
+.dmbc-event-note h3 {
+	margin: 0 0 12px;
+	font-size: 24px;
+	line-height: 1.3;
+}
+
+.dmbc-event-note p {
+	margin: 0 0 20px;
+	font-size: 16px;
+	line-height: 1.7;
+}
+
+.dmbc-members-band {
+	background: var(--dmbc-white);
+	color: var(--dmbc-ink);
+}
+
+.dmbc-members-inner {
+	display: grid;
+	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+	align-items: start;
+	gap: 80px;
+}
+
+.dmbc-members-band .dmbc-section-kicker,
+.dmbc-members-band h2 {
+	color: var(--dmbc-ink);
+}
+
+.dmbc-members-band .dmbc-section-kicker {
+	color: var(--dmbc-link-blue);
+}
+
+.dmbc-members-band p,
+.dmbc-members-band li {
+	color: var(--dmbc-ink);
+	font-size: 16px;
+	line-height: 1.75;
+}
+
+.dmbc-members-band ul {
+	margin-top: 0;
+	padding-left: 22px;
+}
+
+.dmbc-members-band li {
+	margin-bottom: 10px;
+}
+
+.dmbc-members-band .dmbc-button-outline .wp-block-button__link {
+	border-color: var(--dmbc-link-blue);
+	color: var(--dmbc-link-blue);
+}
+
+.dmbc-members-band .dmbc-button-outline .wp-block-button__link:hover {
+	background: #eef3ff;
+	color: var(--dmbc-link-blue-dark);
+}
+
+.dmbc-practical-inner {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(260px, 0.7fr);
+	align-items: center;
+	gap: 64px;
+}
+
+.dmbc-rehearsal-facts {
+	border-top: 1px solid #e1e5e9;
+	border-bottom: 1px solid #e1e5e9;
+	padding-block: 24px;
+}
+
+.dmbc-rehearsal-facts strong {
+	display: block;
+	margin-bottom: 5px;
+	color: var(--dmbc-link-blue);
+	font-size: 12px;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.dmbc-rehearsal-facts p {
+	margin: 0 0 18px;
+	font-size: 16px;
+}
+
+.dmbc-rehearsal-facts p:last-child {
+	margin-bottom: 0;
+}
+
+.dmbc-updates-band {
+	background: var(--dmbc-paper);
+}
+
+.dmbc-updates-heading {
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	gap: 24px;
+	margin-bottom: 32px;
+}
+
+.dmbc-updates-heading h2 {
+	margin-bottom: 0;
+}
+
+.dmbc-updates-heading a {
+	color: var(--dmbc-link-blue);
+	font-size: 14px;
+	font-weight: 800;
+}
+
+.dmbc-news-grid {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+}
+
+.dmbc-news-item {
+	box-sizing: border-box;
+	height: 100%;
+	padding: 26px;
+	border-top: 3px solid var(--dmbc-link-blue);
+	background: var(--dmbc-white);
+}
+
+.dmbc-news-item .wp-block-post-date {
+	color: #555555;
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.dmbc-news-item .wp-block-post-title {
+	margin-block: 12px;
+	font-size: 20px;
+	line-height: 1.35;
+}
+
+.dmbc-news-item .wp-block-post-title a {
+	color: var(--dmbc-ink);
+	text-decoration: none;
+}
+
+.dmbc-news-item .wp-block-post-title a:hover {
+	color: var(--dmbc-link-blue-dark);
+}
+
+.dmbc-news-item .wp-block-post-excerpt {
+	font-size: 14px;
+	line-height: 1.65;
+}
+
+.dmbc-site-footer {
+	background: var(--dmbc-header-blue);
+	color: var(--dmbc-white);
+}
+
+.dmbc-footer-inner {
+	box-sizing: border-box;
+	width: min(100% - 48px, 1180px);
+	margin-inline: auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 32px;
+	padding-block: 42px;
+}
+
+.dmbc-footer-inner p {
+	margin: 0;
+	font-size: 13px;
+}
+
+.dmbc-footer-brand {
+	color: var(--dmbc-white);
+	font-size: 17px;
+	font-weight: 800;
+	text-decoration: none;
+}
+
+.dmbc-footer-tagline {
+	margin-top: 5px !important;
+	color: #e8f3fa;
+	font-size: 12px !important;
+}
+
+.dmbc-footer-nav {
+	font-size: 13px;
+}
+
+.dmbc-footer-nav a {
+	color: var(--dmbc-white);
+	text-decoration: none;
+}
+
+.dmbc-footer-nav a:hover {
+	color: #dceeff;
+}
+
+@media (max-width: 900px) {
+	.dmbc-header-inner {
+		width: 90%;
+		min-height: 92px;
+	}
+
+	.dmbc-header-cta {
+		display: none;
+	}
+
+	.dmbc-hero-inner {
+		min-height: 0;
+		grid-template-columns: minmax(0, 1fr) minmax(220px, 0.75fr);
+		gap: 36px;
+		padding-block: 52px 60px;
+	}
+
+	.dmbc-hero-copy h1 {
+		font-size: 48px;
+	}
+
+	.dmbc-event-inner,
+	.dmbc-members-inner,
+	.dmbc-practical-inner {
+		gap: 36px;
+	}
+}
+
+@media (max-width: 650px) {
+	.dmbc-header-inner {
+		width: calc(100% - 32px);
+		min-height: 72px;
+		gap: 12px;
+	}
+
+	.dmbc-wordmark {
+		flex-basis: auto;
+		max-width: 190px;
+		font-size: 16px;
+	}
+
+	.dmbc-hero-inner {
+		width: calc(100% - 36px);
+		grid-template-columns: minmax(0, 1fr);
+		gap: 34px;
+		padding-block: 48px;
+	}
+
+	.dmbc-hero-copy h1 {
+		font-size: 42px;
+	}
+
+	.dmbc-hero-copy > p:not(.dmbc-eyebrow) {
+		font-size: 16px;
+	}
+
+	.dmbc-hero-actions {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.dmbc-hero-actions > .wp-block-button {
+		width: fit-content;
+		max-width: 100%;
+	}
+
+	.dmbc-hero-actions .wp-block-button__link {
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		min-height: 46px;
+	}
+
+	.dmbc-hero-logo {
+		width: min(100%, 310px);
+		aspect-ratio: 0.92;
+		border-width: 6px;
+	}
+
+	.dmbc-section {
+		width: calc(100% - 36px);
+		padding-block: 60px;
+	}
+
+	.dmbc-section h2 {
+		font-size: 32px;
+	}
+
+	.dmbc-event-inner,
+	.dmbc-members-inner,
+	.dmbc-practical-inner {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 28px;
+	}
+
+	.dmbc-event-note {
+		padding-left: 20px;
+	}
+
+	.dmbc-updates-heading {
+		align-items: start;
+		flex-direction: column;
+	}
+
+	.dmbc-news-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.dmbc-footer-inner {
+		width: calc(100% - 36px);
+		align-items: start;
+		flex-direction: column;
+		gap: 20px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
