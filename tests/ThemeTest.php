@@ -53,6 +53,11 @@ final class ThemeTest extends TestCase {
 		);
 	}
 
+	public function test_theme_setup_does_not_leak_updater_variables_into_global_scope(): void {
+		$this->assertArrayNotHasKey( 'github_api', $GLOBALS );
+		$this->assertArrayNotHasKey( 'update_checker', $GLOBALS );
+	}
+
 	public function test_manrope_is_registered_and_bundled(): void {
 		$theme = json_decode( file_get_contents( dirname( __DIR__ ) . '/theme.json' ), true, 512, JSON_THROW_ON_ERROR );
 		$families = $theme['settings']['typography']['fontFamilies'];

@@ -5,6 +5,7 @@ declare(strict_types=1);
 if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __DIR__ ) . '/' );
 }
+define( 'DMBC_THEME_TESTING', true );
 
 $GLOBALS['dmbc_theme_test_state'] = array(
 	'actions'      => array(),

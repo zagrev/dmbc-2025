@@ -1,0 +1,67 @@
+name: Theme CI and Release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  release:
+    types: [published]
+
+jobs:
+  test:
+    name: Tests (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ["8.3", "8.4", "8.5"]
+    steps:
+      - name: Check out theme
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2
+      - name: Install development dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Lint theme PHP
+        run: composer lint
+      - name: Run unit tests
+        run: composer test
+
+  package:
+    name: Build WordPress theme ZIP
+    if: github.event_name == 'release'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out released theme
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+      - name: Set up PHP and Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer:v2
+      - name: Install runtime dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --no-progress
+      - name: Build installable ZIP
+        run: |
+          mkdir -p package/dmbc-2025 dist
+          cp style.css theme.json functions.php README.md package/dmbc-2025/
+          cp -R assets parts templates package/dmbc-2025/
+          cp -R vendor package/dmbc-2025/
+          (cd package && zip -qr "$GITHUB_WORKSPACE/dist/dmbc-2025.zip" dmbc-2025)
+          unzip -l dist/dmbc-2025.zip
+      - name: Attach ZIP to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/dmbc-2025.zip
+          fail_on_unmatched_files: true
