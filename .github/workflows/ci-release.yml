@@ -1,10 +1,13 @@
 name: Theme CI and Release
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     tags: ["v*"]
   pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, closed]
   release:
     types: [published]
 
@@ -33,9 +36,68 @@ jobs:
       - name: Run unit tests
         run: composer test
 
+  prepare-release:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Set release version
+        id: version
+        run: |
+          CURRENT_VERSION=$(sed -nE 's/^Version: ([0-9]+\.[0-9]+\.[0-9]+)$/\1/p' style.css)
+          test -n "$CURRENT_VERSION"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="$CURRENT_VERSION"
+          else
+            LATEST_TAG=$(git tag --list 'v[0-9]*' --sort=-version:refname | head -n 1)
+            LATEST_VERSION="${LATEST_TAG#v}"
+            if [ -z "$LATEST_TAG" ]; then
+              LATEST_VERSION="$CURRENT_VERSION"
+            fi
+            IFS=. read -r MAJOR MINOR PATCH <<< "$LATEST_VERSION"
+            VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+
+            sed -i -E "s/^Version: .*/Version: ${VERSION}/" style.css
+          fi
+
+          grep -F "Version: $VERSION" style.css
+          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+      - name: Commit and tag release version
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add style.css
+          git commit -m "chore: release ${TAG}"
+          git tag "${TAG}"
+          git push origin main "${TAG}"
+      - name: Create or update manual release tag
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          git tag -f "${TAG}"
+          git push --force origin "${TAG}"
+
   package:
     name: Build WordPress theme ZIP
-    needs: test
+    if: >-
+      always() &&
+      needs.test.result == 'success' &&
+      (github.event_name == 'release' || needs.prepare-release.result == 'success')
+    needs: [test, prepare-release]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -43,7 +105,7 @@ jobs:
       - name: Check out released theme
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || needs.prepare-release.outputs.tag }}
       - name: Set up PHP and Composer
         uses: shivammathur/setup-php@v2
         with:
@@ -62,5 +124,8 @@ jobs:
       - name: Attach ZIP to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event_name == 'release' && github.event.release.tag_name || needs.prepare-release.outputs.tag }}
+          name: ${{ github.event_name == 'release' && github.event.release.tag_name || needs.prepare-release.outputs.tag }}
+          generate_release_notes: true
           files: dist/dmbc-2025.zip
           fail_on_unmatched_files: true
