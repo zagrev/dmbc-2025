@@ -35,7 +35,6 @@ jobs:
 
   package:
     name: Build WordPress theme ZIP
-    if: github.event_name == 'release'
     needs: test
     runs-on: ubuntu-latest
     permissions:
