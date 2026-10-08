@@ -11,7 +11,14 @@ namespace Dmbc\DaytonMetro2025;
 
 use YahnisElsts\PluginUpdateChecker\v5p7\Vcs\PluginUpdateChecker;
 use YahnisElsts\PluginUpdateChecker\v5p7\Vcs\GitHubApi;
+
+/**
+ * Register the theme specifics.
+ *
+ * @return void
+ */
 function init(): void {
+
 	$autoload = __DIR__ . '/vendor/autoload.php';
 	if ( \is_readable( $autoload ) ) {
 		require_once $autoload;
@@ -51,5 +58,5 @@ function init(): void {
 		10,
 		2
 	);
-};
+}
 init();
