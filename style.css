@@ -88,22 +88,17 @@ body {
 	font-size: var(--dmbc-paragraph-size);
 }
 
-.dmbc-header-cta .wp-block-button__link,
 .dmbc-button-primary .wp-block-button__link {
-	font-size: var(--dmbc-paragraph-size);
 	border-radius: 0.2rem;
 	background: var(--dmbc-link-blue);
 	color: var(--dmbc-white);
-	font-size: 0.9rem;
-	font-weight: 800;
 	font-size: 0.8rem;
+	font-weight: 800;
 	padding: 0.8rem 1.3rem;
 	text-decoration: none;
 }
 
-.dmbc-header-cta .wp-block-button__link:hover,
 .dmbc-button-primary .wp-block-button__link:hover {
-	font-size: 0.8rem;
 	background: var(--dmbc-link-blue-dark);
 }
 
@@ -116,7 +111,7 @@ body {
 }
 
 .dmbc-button-outline .wp-block-button__link {
-	border: 0.1rem solid currentColor;
+	border: 0.1rem solid var(--dmbc-link-blue);
 	border-radius: 0.2rem;
 	background: transparent;
 	color: var(--dmbc-link-blue);
@@ -125,6 +120,11 @@ body {
 	line-height: 1.2;
 	padding: 0.8rem 1.3rem;
 	text-decoration: none;
+}
+
+.dmbc-button-outline .wp-block-button__link:hover {
+	background: #eef3ff;
+	color: var(--dmbc-link-blue-dark);
 }
 
 .dmbc-home-hero {
@@ -282,16 +282,6 @@ body {
 
 .dmbc-members-band li {
 	margin-bottom: 0.6rem;
-}
-
-.dmbc-members-band .dmbc-button-outline .wp-block-button__link {
-	border-color: var(--dmbc-link-blue);
-	color: var(--dmbc-link-blue);
-}
-
-.dmbc-members-band .dmbc-button-outline .wp-block-button__link:hover {
-	background: #eef3ff;
-	color: var(--dmbc-link-blue-dark);
 }
 
 .dmbc-practical-inner {
