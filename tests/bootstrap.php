@@ -45,4 +45,17 @@ function wp_get_current_user(): object {
 	return (object) array( 'roles' => $GLOBALS['dmbc_theme_test_state']['current_roles'] );
 }
 
+function admin_url(): string {
+	return 'https://example.test/wp-admin/';
+}
+
+function home_url( string $path = '' ): string {
+	return 'https://example.test' . $path;
+}
+
+function wp_logout_url( string $redirect = '' ): string {
+	$GLOBALS['dmbc_theme_test_state']['logout_redirect'] = $redirect;
+	return 'https://example.test/wp-login.php?action=logout&_wpnonce=test-logout-nonce';
+}
+
 require_once dirname( __DIR__ ) . '/functions.php';

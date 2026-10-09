@@ -77,6 +77,11 @@ body {
 	text-decoration: none;
 }
 
+.dmbc-nav .wp-block-navigation__submenu-container {
+	background: var(--dmbc-header-blue);
+	color: var(--dmbc-white);
+}
+
 .dmbc-nav .wp-block-navigation__responsive-container.is-menu-open {
 	padding: 1.8rem;
 	font-size: var(--dmbc-paragraph-size);

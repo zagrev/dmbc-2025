@@ -37,6 +37,49 @@ final class ThemeTest extends TestCase {
 		$this->assertSame( $content, $this->navigation_filter()( $content, $block ) );
 	}
 
+	public function test_members_only_submenu_preserves_member_visibility(): void {
+		$filter = $GLOBALS['dmbc_theme_test_state']['filters']['render_block_core/navigation-submenu'][0]['callback'];
+		$block = array( 'attrs' => array( 'label' => 'Members Only' ) );
+		$content = '<li>Members Only<ul><li>Learning Tracks</li></ul></li>';
+
+		$this->assertSame( '', $filter( $content, $block ) );
+		$GLOBALS['dmbc_theme_test_state']['logged_in'] = true;
+		$GLOBALS['dmbc_theme_test_state']['current_roles'] = array( 'subscriber' );
+		$this->assertSame( '', $filter( $content, $block ) );
+		$GLOBALS['dmbc_theme_test_state']['current_roles'] = array( 'um_member' );
+		$this->assertSame( $content, $filter( $content, $block ) );
+		$this->assertSame( $content, $filter( $content, array( 'attrs' => array( 'label' => 'About Us' ) ) ) );
+	}
+
+	public function test_admin_and_logoff_links_use_wordpress_urls(): void {
+		$filter = $GLOBALS['dmbc_theme_test_state']['filters']['render_block_data'][0]['callback'];
+		$block = array(
+			'blockName' => 'core/navigation-link',
+			'attrs'     => array( 'className' => 'custom-class dmbc-nav-admin', 'url' => '/wp-admin/' ),
+		);
+		$this->assertSame( admin_url(), $filter( $block )['attrs']['url'] );
+		$block['attrs']['className'] = 'dmbc-nav-logoff custom-class';
+		$result = $filter( $block );
+		$this->assertStringContainsString( 'action=logout&_wpnonce=test-logout-nonce', $result['attrs']['url'] );
+		$this->assertSame( home_url( '/' ), $GLOBALS['dmbc_theme_test_state']['logout_redirect'] );
+		$block['attrs']['className'] = 'ordinary-link';
+		$this->assertSame( $block, $filter( $block ) );
+		$block['blockName'] = 'core/group';
+		$block['attrs']['className'] = 'dmbc-nav-logoff';
+		$this->assertSame( $block, $filter( $block ) );
+	}
+
+	public function test_header_contains_members_submenu_with_all_six_links_in_order(): void {
+		$header = file_get_contents( dirname( __DIR__ ) . '/parts/header.html' );
+		$this->assertSame( 1, preg_match( '/<!-- wp:navigation-submenu (.*?)-->(.*?)<!-- \/wp:navigation-submenu -->/s', $header, $matches ) );
+		$this->assertStringContainsString( '"label":"Members Only"', $matches[1] );
+		preg_match_all( '/<!-- wp:navigation-link (\{.*?\}) \/-->/', $matches[2], $links );
+		$attributes = array_map( static fn( string $json ): array => json_decode( $json, true, 512, JSON_THROW_ON_ERROR ), $links[1] );
+		$this->assertSame( array( 'Learning Tracks', 'Song Lists', 'Member News', 'Roster', 'Admin', 'Logoff' ), array_column( $attributes, 'label' ) );
+		$this->assertSame( array( '/learning-tracks/', '/song-lists/', '/member-news/', '/roster/' ), array_slice( array_column( $attributes, 'url' ), 0, 4 ) );
+		$this->assertSame( array_fill( 0, 6, false ), array_column( $attributes, 'isTopLevelLink' ) );
+	}
+
 	public function test_theme_enqueues_its_stylesheet_with_a_file_version(): void {
 		$callback = $GLOBALS['dmbc_theme_test_state']['actions']['wp_enqueue_scripts'][0]['callback'];
 		$callback();

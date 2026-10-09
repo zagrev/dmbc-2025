@@ -42,21 +42,37 @@ function init(): void {
 		}
 	);
 
+	$members_visibility = static function ( string $block_content, array $block ): string {
+		if ( 'Members Only' !== ( $block['attrs']['label'] ?? '' ) ) {
+			return $block_content;
+		}
+
+		if ( ! \is_user_logged_in() ) {
+			return '';
+		}
+
+		return \in_array( 'um_member', \wp_get_current_user()->roles, true ) ? $block_content : '';
+	};
+	foreach ( array( 'core/navigation-link', 'core/navigation-submenu' ) as $block_name ) {
+		\add_filter( 'render_block_' . $block_name, $members_visibility, 10, 2 );
+	}
+
 	\add_filter(
-		'render_block_core/navigation-link',
-		static function ( string $block_content, array $block ): string {
-			if ( 'Members Only' !== ( $block['attrs']['label'] ?? '' ) ) {
-				return $block_content;
+		'render_block_data',
+		static function ( array $block ): array {
+			if ( 'core/navigation-link' !== ( $block['blockName'] ?? '' ) ) {
+				return $block;
 			}
 
-			if ( ! \is_user_logged_in() ) {
-				return '';
+			$classes = \preg_split( '/\s+/', \trim( $block['attrs']['className'] ?? '' ) );
+			if ( \in_array( 'dmbc-nav-admin', $classes, true ) ) {
+				$block['attrs']['url'] = \admin_url();
+			} elseif ( \in_array( 'dmbc-nav-logoff', $classes, true ) ) {
+				$block['attrs']['url'] = \wp_logout_url( \home_url( '/' ) );
 			}
 
-			return \in_array( 'um_member', \wp_get_current_user()->roles, true ) ? $block_content : '';
-		},
-		10,
-		2
+			return $block;
+		}
 	);
 }
 init();
