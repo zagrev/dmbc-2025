@@ -43,16 +43,21 @@ function init(): void {
 	);
 
 	$members_visibility = static function ( string $block_content, array $block ): string {
-		if ( 'Members Only' !== ( $block['attrs']['label'] ?? '' ) ) {
-			return $block_content;
-		}
-
-		if ( ! \is_user_logged_in() ) {
+		if ( \is_user_logged_in() && 'Login' === ( $block['attrs']['label'] ?? '' ) ) {
 			return '';
 		}
+		if ( 'Members Only' === ( $block['attrs']['label'] ?? '' ) ) {
 
-		return \in_array( 'um_member', \wp_get_current_user()->roles, true ) ? $block_content : '';
+			if ( ! \is_user_logged_in() ) {
+				return '';
+			}
+
+			return \in_array( 'um_member', \wp_get_current_user()->roles, true ) ? $block_content : '';
+		}
+
+		return $block_content;
 	};
+
 	foreach ( array( 'core/navigation-link', 'core/navigation-submenu' ) as $block_name ) {
 		\add_filter( 'render_block_' . $block_name, $members_visibility, 10, 2 );
 	}
@@ -75,4 +80,5 @@ function init(): void {
 		}
 	);
 }
+
 init();

@@ -23,6 +23,10 @@ Update the page destinations in `parts/header.html` if needed. If the header has
 
 Install the development dependency with `composer install`, then run `composer test` and `composer lint`. The PHPUnit 13 test suite requires PHP 8.4 or newer; the theme itself supports PHP 8.0 or newer.
 
+## IDE WordPress declarations
+
+`composer install` includes `php-stubs/wordpress-stubs` as a development dependency. It provides WordPress function, class, and constant declarations for IDE completion and static analysis without replacing the test mocks or loading into the running site. Let your PHP language server index `vendor/php-stubs/wordpress-stubs`; reload the VS Code window if stale unknown-function warnings remain. Do not include or require the stub files at runtime.
+
 ## GitHub Actions
 
 Pull requests and pushes to `main` run PHP lint and the unit tests on PHP 8.4, and 8.5. Publishing a GitHub Release runs the same checks, installs production dependencies, then attaches `dmbc-2025.zip`. The ZIP contains the theme and its updater dependency in a `dmbc-2025/` directory and can be installed from **Appearance > Themes > Add New > Upload Theme**. Install Twenty Twenty-Five before activating the child theme.
