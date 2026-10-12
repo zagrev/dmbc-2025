@@ -76,7 +76,7 @@ final class ThemeTest extends TestCase {
 		preg_match_all( '/<!-- wp:navigation-link (\{.*?\}) \/-->/', $matches[2], $links );
 		$attributes = array_map( static fn( string $json ): array => json_decode( $json, true, 512, JSON_THROW_ON_ERROR ), $links[1] );
 		$this->assertSame( array( 'Learning Tracks', 'Song Lists', 'Member News', 'Roster', 'Admin', 'Logoff' ), array_column( $attributes, 'label' ) );
-		$this->assertSame( array( '/learning-tracks/', '/song-lists/', '/member-news/', '/roster/' ), array_slice( array_column( $attributes, 'url' ), 0, 4 ) );
+		$this->assertSame( array( '/learning-tracks/', '/songlists/', '/category/members-only/', '/members/' ), array_slice( array_column( $attributes, 'url' ), 0, 4 ) );
 		$this->assertSame( array_fill( 0, 6, false ), array_column( $attributes, 'isTopLevelLink' ) );
 	}
 
