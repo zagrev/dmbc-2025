@@ -396,7 +396,7 @@ body {
 	margin-inline: auto;
 	display: flex;
 	justify-content: space-between;
-	padding-block: 2.6rem;
+	padding-block: 1rem;
 	font-size: 0.8rem;
 }
 
@@ -407,8 +407,13 @@ body {
 	text-decoration: none;
 }
 
-.dmbc-footer-nav {
-	font-size: 0.8rem;
+.dmbc-footer-social {
+	margin: 0;
+}
+
+.dmbc-footer-tagline {
+	margin-top: 0;
+	font-size: 0.9rem;
 }
 
 @media (max-width: 56.3rem) {
