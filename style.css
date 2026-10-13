@@ -407,8 +407,8 @@ body {
 	text-decoration: none;
 }
 
-.dmbc-footer-nav {
-	font-size: 0.8rem;
+.dmbc-footer-social {
+	margin: 0;
 }
 
 @media (max-width: 56.3rem) {
